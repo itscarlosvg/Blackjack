@@ -64,7 +64,7 @@ export default function Hand({
             border border-yellow-500/50
             shadow-lg
           ">
-            {points} {isDealer ? 'Dealer' : 'Points'}
+            {points} {isDealer ? 'Points' : 'Points'}
             {points === 21 && cards.length === 2 && (
               <span className="text-yellow-400 ml-1 sm:ml-2">BLACKJACK!</span>
             )}
