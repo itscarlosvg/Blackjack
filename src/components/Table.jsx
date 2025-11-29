@@ -168,14 +168,14 @@ export default function Table() {
     let finalMessage = "";
 
     if (netResult > 0) {
-      finalMessage = `GANASTE +$${netResult}`;
+      finalMessage = `You won +$${netResult}`;
       updateBalance(netResult); // ← Agregar ganancias al balance
     } else if (netResult < 0) {
-      finalMessage = `PERDISTE $${netResult}`;
+      finalMessage = `${netResult} lost.`;
       updateBalance(netResult); // ← Restar pérdidas del balance (netResult es negativo)
     } else {
       const totalBet = bets.reduce((sum, bet) => sum + bet, 0);
-      finalMessage = `EMPATE`;
+      finalMessage = `TIE`;
       // En empate no se modifica el balance
     }
 
@@ -428,35 +428,35 @@ export default function Table() {
 
         if (dealerHasBlackjack && playerHasBlackjack) {
           handMessage +=
-            "Empate (Push) - Ambos Blackjack - No ganas ni pierdes";
+            "Push - It's a tie. Your bet is returned.";
           type = "info";
         } else if (dealerHasBlackjack) {
           totalLoss += bets[idx];
-          handMessage += `PERDISTE $${bets[idx]} (Dealer Blackjack)`;
+          handMessage += `${bets[idx]} lost. (Dealer got Blackjack)`;
           type = "lose";
         } else if (playerHasBlackjack) {
           const win = bets[idx] * 1.5;
           totalWin += win;
-          handMessage += `GANASTE Blackjack +$${win}`;
+          handMessage += `Blackjack! You win $${win}`;
           type = "win";
         } else if (playerBust) {
           totalLoss += bets[idx];
-          handMessage += `PERDISTE $${bets[idx]}`;
+          handMessage += `${bets[idx]} lost.`;
           type = "lose";
         } else if (dealerBust) {
           totalWin += bets[idx];
-          handMessage += `GANASTE $${bets[idx]}`;
+          handMessage += `You won $${bets[idx]}`;
           type = "win";
         } else if (playerScore > dealerScore) {
           totalWin += bets[idx];
-          handMessage += `GANASTE $${bets[idx]}`;
+          handMessage += `You won $${bets[idx]}`;
           type = "win";
         } else if (playerScore < dealerScore) {
           totalLoss += bets[idx];
-          handMessage += `PERDISTE $${bets[idx]}`;
+          handMessage += `${bets[idx]} lost.`;
           type = "lose";
         } else {
-          handMessage += `EMPATE`;
+          handMessage += `TIE`;
           type = "info";
         }
 
@@ -501,13 +501,13 @@ export default function Table() {
       let finalMessage = "";
 
       if (netResult > 0) {
-        finalMessage = `GANASTE +$${netResult}`;
+        finalMessage = `You win +$${netResult}`;
         updateBalance(netResult);
       } else if (netResult < 0) {
-        finalMessage = `PERDISTE $${Math.abs(netResult)}`;
+        finalMessage = `You lost $${Math.abs(netResult)}`;
         updateBalance(netResult);
       } else {
-        finalMessage = `EMPATE`;
+        finalMessage = `TIE`;
       }
 
       setMessage(finalMessage);
@@ -765,9 +765,9 @@ export default function Table() {
           font-bold text-lg sm:text-xl md:text-2xl
           transform transition-all duration-500 animate-pulse
           ${
-            message.includes("GANASTE")
+            message.includes("You win")
               ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-300"
-              : message.includes("PERDISTE")
+              : message.includes("You lost")
               ? "bg-gradient-to-r from-red-500 to-rose-600 text-white border-red-300"
               : "bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-blue-300"
           }
