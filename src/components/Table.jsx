@@ -809,10 +809,10 @@ export default function Table() {
               {/* Mensaje de bienvenida */}
               <div className="bg-black/40 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-yellow-500/30 mb-8">
                 <p className="text-white/90 text-lg sm:text-xl mb-4">
-                  ¡Bienvenido al clásico juego de Blackjack!
+                  Welcome to Blackjack
                 </p>
                 <p className="text-white/70 text-sm sm:text-base">
-                  Haz tu apuesta y demuestra tu habilidad contra el dealer
+                  Make your bet and challenge the dealer!
                 </p>
               </div>
 
