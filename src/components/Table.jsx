@@ -248,7 +248,7 @@ export default function Table() {
 
   const handleSurrender = () => {
     if (dealerHand[0]?.value === "A") {
-      setMessage("No puedes rendirte, el dealer muestra un As");
+      setMessage("Surrender is not allowed when the dealer shows an Ace");
       return;
     }
 
@@ -264,9 +264,9 @@ export default function Table() {
     // SOLO mostrar mensaje si NO es la última mano
     const isLastHand = currentHandIndex === playerHands.length - 1;
     if (!isLastHand) {
-      setMessage(`Te has rendido - pierdes la mitad de la apuesta ($${loss})`);
+      setMessage(`Surrendered. $${loss} lost.`);
     } else {
-      setMessage(`RENDICIÓN - Pierdes $${loss}`);
+      setMessage(`Surrendered. $${loss} Forfeited`);
       setTurn("game-over");
       return; // No llamar advanceToNextHand si es la última mano
     }
@@ -308,15 +308,15 @@ export default function Table() {
 
         // Verificar que tenga suficiente balance para el seguro
         if (insuranceAmount > balance) {
-          setMessage("Balance insuficiente para el seguro");
+          setMessage("Insufficient balance for insurance");
           return;
         }
 
         setInsuranceBet(insuranceAmount);
         updateBalance(-insuranceAmount); // Restar el seguro del balance inmediatamente
-        setMessage(`Seguro tomado: $${insuranceAmount}`);
+        setMessage(`Insurance taken: $${insuranceAmount}`);
       } else {
-        setMessage("Seguro no disponible - dealer no muestra As");
+        setMessage("Insurance not available. Dealer doesn't show an Ace");
       }
     } catch (error) {
       setMessage(`Error: ${error.message}`);
@@ -395,12 +395,12 @@ export default function Table() {
         const insuranceWin = insuranceBet * 2;
         updateBalance(insuranceWin);
         messages.push({
-          text: `¡Dealer tiene Blackjack! Ganas el seguro: +$${insuranceWin}`,
+          text: `Dealer has Blackjack! Insurance: +$${insuranceWin}`,
           type: "win",
         });
       } else {
         messages.push({
-          text: `Dealer no tiene Blackjack - Pierdes el seguro ($${insuranceBet})`,
+          text: `Dealer doesn't have Blackjack. You lost the insurance: ($${insuranceBet})`,
           type: "lose",
         });
       }
@@ -409,11 +409,9 @@ export default function Table() {
       playerHands.forEach((hand, idx) => {
         if (surrenderedHands[idx]) {
           messages.push({
-            text: `Mano ${
+            text: `Hand ${
               idx + 1
-            }: Te rendiste - pierdes la mitad de la apuesta ($${
-              bets[idx] / 2
-            })`,
+            }: You surrendered. $${bets[idx] / 2} forfeited`,
             type: "lose",
           });
           return;
@@ -423,12 +421,11 @@ export default function Table() {
         const playerBust = isBust(hand);
         const playerHasBlackjack = isBlackjack(hand);
 
-        let handMessage = `Mano ${idx + 1}: `;
+        let handMessage = `Hand ${idx + 1}: `;
         let type = "neutral";
 
         if (dealerHasBlackjack && playerHasBlackjack) {
-          handMessage +=
-            "Push - It's a tie. Your bet is returned.";
+          handMessage += "It's a tie. Your bet is returned.";
           type = "info";
         } else if (dealerHasBlackjack) {
           totalLoss += bets[idx];
@@ -437,7 +434,7 @@ export default function Table() {
         } else if (playerHasBlackjack) {
           const win = bets[idx] * 1.5;
           totalWin += win;
-          handMessage += `Blackjack! You win $${win}`;
+          handMessage += `Blackjack! You won $${win}`;
           type = "win";
         } else if (playerBust) {
           totalLoss += bets[idx];
@@ -501,7 +498,7 @@ export default function Table() {
       let finalMessage = "";
 
       if (netResult > 0) {
-        finalMessage = `You win +$${netResult}`;
+        finalMessage = `You won +$${netResult}`;
         updateBalance(netResult);
       } else if (netResult < 0) {
         finalMessage = `You lost $${Math.abs(netResult)}`;
@@ -544,7 +541,6 @@ export default function Table() {
     currentHand.length === 2 &&
     insuranceBet === 0;
 
-  // Agrega esta función en Table.jsx, antes del return
   const calculateDealerPoints = () => {
     if (dealerHand.length === 0) return 0;
 
@@ -579,10 +575,8 @@ export default function Table() {
 
   return (
     <div className="h-full w-full relative overflow-hidden bg-gradient-to-br from-emerald-900 via-green-800 to-gray-900">
-      {/* Textura de fieltro del casino */}
       <div className="absolute inset-0 bg-[linear-gradient(45deg,_transparent_49%,_rgba(255,255,255,0.02)_50%,_transparent_51%)] bg-[length:8px_8px]"></div>
 
-      {/* Brillo ambiental */}
       <div className="absolute inset-0 hidden sm:block bg-[linear-gradient(45deg,_transparent_49%,_rgba(255,255,255,0.02)_50%,_transparent_51%)] bg-[length:8px_8px]"></div>
 
       <div className="h-full w-full flex flex-col safe-area-container">
@@ -625,7 +619,7 @@ export default function Table() {
                 )}
                 {turn === "dealer" && turn !== "game-over" && (
                   <div className="inline-block bg-red-500/30 text-red-200 px-2 sm:px-3 py-1 rounded-full border border-red-500/40 text-xs sm:text-sm animate-pulse">
-                     Playing...
+                    Playing...
                   </div>
                 )}
               </div>
@@ -765,7 +759,7 @@ export default function Table() {
           font-bold text-lg sm:text-xl md:text-2xl
           transform transition-all duration-500 animate-pulse
           ${
-            message.includes("You win")
+            message.includes("You won")
               ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-300"
               : message.includes("You lost")
               ? "bg-gradient-to-r from-red-500 to-rose-600 text-white border-red-300"
