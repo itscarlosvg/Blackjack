@@ -625,7 +625,7 @@ export default function Table() {
                 )}
                 {turn === "dealer" && turn !== "game-over" && (
                   <div className="inline-block bg-red-500/30 text-red-200 px-2 sm:px-3 py-1 rounded-full border border-red-500/40 text-xs sm:text-sm animate-pulse">
-                    🎯 Playing...
+                     Playing...
                   </div>
                 )}
               </div>
@@ -663,7 +663,7 @@ export default function Table() {
                 </h2>
                 {dealingPhase && (
                   <div className="inline-block bg-green-500/30 text-green-200 px-2 sm:px-3 py-1 rounded-full border border-green-500/40 text-xs sm:text-sm">
-                    🎯 Receiving cards...
+                    Receiving cards...
                   </div>
                 )}
               </div>

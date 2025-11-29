@@ -5,7 +5,6 @@ const BlackjackButton = ({
   onClick,
   disabled,
   action,
-  icon,
   children,
   fullWidth,
 }) => {
@@ -117,7 +116,6 @@ export default function Controls(props) {
           onClick={props.onDouble}
           disabled={!props.canDouble}
           action="double"
-          icon="2️⃣"
         >
           DOUBLE
         </BlackjackButton>
@@ -125,7 +123,6 @@ export default function Controls(props) {
           onClick={props.onSplit}
           disabled={!props.canSplit}
           action="split"
-          icon="🔄"
         >
           SPLIT
         </BlackjackButton>
@@ -133,12 +130,11 @@ export default function Controls(props) {
           onClick={props.onHit}
           disabled={!props.canHit}
           action="hit"
-          icon="⬇️"
         >
           HIT
         </BlackjackButton>
 
-        <BlackjackButton onClick={props.onStand} action="stand" icon="✋">
+        <BlackjackButton onClick={props.onStand} action="stand" >
           STAND
         </BlackjackButton>
         {/* Segunda fila - 3 botones secundarios */}
@@ -147,7 +143,6 @@ export default function Controls(props) {
           onClick={props.onInsurance}
           disabled={!props.canInsurance}
           action="insurance"
-          icon="🛡️"
         >
           INSURANCE
         </BlackjackButton>
@@ -155,7 +150,6 @@ export default function Controls(props) {
           onClick={props.onSurrender}
           disabled={!props.canSurrender}
           action="surrender"
-          icon="🏳️"
         >
           SURRENDER
         </BlackjackButton>
