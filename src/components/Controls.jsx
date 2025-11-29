@@ -5,6 +5,7 @@ const BlackjackButton = ({
   onClick,
   disabled,
   action,
+  icon,
   children,
   fullWidth,
 }) => {
